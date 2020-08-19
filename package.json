@@ -4,7 +4,13 @@
   "description": "Chess but you can time-travel and jump to parallel universes.",
   "main": "build/index.js",
   "scripts": {
-    "build:client": "parcel build ./client/index.html --out-dir ./server/public --target browser",
+    "build:client": "parcel build client/index.html --out-dir server/public",
+    "build:server": "tsc -p server && cp -R server/public dist/",
+    "build:server:dev": "tsc -p server",
+    "build": "rm -rf dist; echo \"Building...\"; npm run build:client && npm run build:server",
+    "dev:server": "node scripts/dev:server.js",
+    "dev:client": "rm -rf server/public ; node scripts/dev:client.js",
+    "dev": "rm -rf server/public/* ; node scripts/dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +36,7 @@
     "@types/express": "^4.17.7",
     "@types/helmet": "0.0.47",
     "@types/morgan": "^1.9.1",
+    "@types/node": "^14.6.0",
     "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
@@ -45,6 +52,8 @@
     "typescript": "^3.9.7"
   },
   "devDependencies": {
+    "chalk": "^4.1.0",
+    "nodemon": "^2.0.4",
     "parcel-bundler": "^1.12.4"
   },
   "alias": {
