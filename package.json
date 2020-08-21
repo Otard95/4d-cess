@@ -4,14 +4,17 @@
   "description": "Chess but you can time-travel and jump to parallel universes.",
   "main": "build/index.js",
   "scripts": {
-    "build:client": "parcel build client/index.html --out-dir server/public",
+    "build:client": "parcel build client/index.html --out-dir server/public --log-level 4 --detailed-report 10",
     "build:server": "tsc -p server && cp -R server/public dist/",
     "build:server:dev": "tsc -p server",
     "build": "rm -rf dist; echo \"Building...\"; npm run build:client && npm run build:server",
     "dev:server": "node scripts/dev:server.js",
     "dev:client": "rm -rf server/public ; node scripts/dev:client.js",
     "dev": "rm -rf server/public/* ; node scripts/dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate:client": "parcel build client/index.html --out-dir server/public --log-level 4 --detailed-report 10",
+    "validate:server": "tsc -p server --noEmit",
+    "validate": "npm run validate:client && npm run validate:server"
   },
   "repository": {
     "type": "git",
@@ -54,10 +57,16 @@
   },
   "devDependencies": {
     "chalk": "^4.1.0",
+    "husky": "^4.2.5",
     "nodemon": "^2.0.4",
     "parcel-bundler": "^1.12.4"
   },
   "alias": {
     "common": "./common"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run validate"
+    }
   }
 }
