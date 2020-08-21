@@ -20,15 +20,14 @@ app.use(morgan(
 app.use(helmet())
 // app.use(cors())
 app.use(express.json())
+// Serve static files and react app at any other url
+app.use('/', express.static('public'))
+app.get(/^\/[^(api)]{1}/, (_req, res) => {
+  res.sendFile(path.resolve('./public/index.html'))
+})
 
 // Attach the api routes
 app.use('/api', api)
-
-// Serve static files and react app at any other url
-app.use('/', express.static('public'))
-app.get('*', (_req, res) => {
-  res.sendFile(path.resolve('./public/index.html'))
-})
 
 // Use middleware
 app.use(middleware.notFound)
