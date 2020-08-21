@@ -66,7 +66,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "git stash save && npm run validate && git stash pop"
+      "pre-push": "git stash push -m \"tmp stash for pre-commit\" && npm run validate && (git stash pop || exit 0)"
     }
   }
 }
